@@ -12,8 +12,8 @@
                 </p>
                 <div class="form-con">
                     <Form ref="loginForm" :model="form" :rules="rules">
-                        <FormItem prop="userName">
-                            <Input v-model="form.userName" placeholder="请输入用户名">
+                        <FormItem prop="username">
+                            <Input v-model="form.username" placeholder="请输入用户名">
                                 <span slot="prepend">
                                     <Icon :size="16" type="person"></Icon>
                                 </span>
@@ -44,11 +44,11 @@ export default {
   data() {
     return {
       form: {
-        userName: "admin",
+        username: "admin",
         password: "123456"
       },
       rules: {
-        userName: [
+        username: [
           { required: true, message: "账号不能为空", trigger: "blur" }
         ],
         password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
@@ -60,18 +60,16 @@ export default {
       var that = this;
       that.$refs.loginForm.validate(valid => {
         if (valid) {
+          var postData = {
+            username: that.form.username,
+            password: that.form.password
+          };
           axios
-            .get(
-              config.baseUrl +
-                "/user/login?userName=" +
-                that.form.userName +
-                "&password=" +
-                that.form.password
-            )
+            .post(config.baseUrl + "/base/user/login", postData)
             .then(function(res) {
-              console.log(res);
+              // console.log(res);
               if (res.data.code == "200") {
-                Cookies.set("user", that.form.userName);
+                Cookies.set("user", that.form.username);
                 that.$router.push({
                   name: "home_index"
                 });

@@ -2,25 +2,32 @@
 <div>
     <h1>添加用户</h1>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-        <FormItem label="用户名" prop="userName">
-            <Input v-model="formValidate.userName" placeholder="输入用户名"></Input>
+        <FormItem label="姓名" prop="name">
+            <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
+        </FormItem>
+        <FormItem label="用户名" prop="username">
+            <Input v-model="formValidate.username" placeholder="输入用户名"></Input>
         </FormItem>
         <FormItem label="密码" prop="password">
             <Input type="password" v-model="formValidate.password" placeholder="输入密码"></Input>
         </FormItem>
-        <FormItem label="昵称" prop="nickName">
-            <Input v-model="formValidate.nickName" placeholder="输入昵称"></Input>
+        <FormItem label="部门" prop="dept">
+            <Select v-model="formValidate.dept" placeholder="选择部门">
+                <Option value="产品部">产品部</Option>
+                <Option value="设计部">设计部</Option>
+                <Option value="研发部">研发部</Option>
+                <Option value="测试部">测试部</Option>
+                <Option value="运维部">运维部</Option>
+            </Select>
         </FormItem>
         <FormItem label="性别" prop="sex">
             <Select v-model="formValidate.sex" placeholder="选择性别">
-                <Option value="1">男</Option>
-                <Option value="0">女</Option>
+                <Option value="男">男</Option>
+                <Option value="女">女</Option>
             </Select>
         </FormItem>
-        <FormItem label="注册日期" prop="registerDate">
-          <FormItem prop="registerDate">
-              <DatePicker type="date" v-model="formValidate.registerDate" placeholder="选择注册日期"></DatePicker>
-          </FormItem>
+        <FormItem label="描述" prop="description">
+            <Input v-model="formValidate.description" placeholder="输入描述"></Input>
         </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
@@ -37,14 +44,22 @@ export default {
   data() {
     return {
       formValidate: {
-        userName: "",
+        name: "",
+        username: "",
         password: "",
-        nickName: "",
+        dept: "",
         sex: "",
-        registerDate: ""
+        description: ""
       },
       ruleValidate: {
-        userName: [
+        name: [
+          {
+            required: true,
+            message: "姓名不能为空",
+            trigger: "blur"
+          }
+        ],
+        username: [
           {
             required: true,
             message: "用户名不能为空",
@@ -58,25 +73,10 @@ export default {
             trigger: "blur"
           }
         ],
-        nickName: [
+        dept: [
           {
             required: true,
-            message: "昵称不能为空",
-            trigger: "blur"
-          }
-        ],
-        sex: [
-          {
-            required: true,
-            message: "性别不能为空",
-            trigger: "change"
-          }
-        ],
-        registerDate: [
-          {
-            required: true,
-            type: "date",
-            message: "注册日期不能为空",
+            message: "部门不能为空",
             trigger: "change"
           }
         ]
@@ -88,14 +88,17 @@ export default {
       var that = this;
       that.$refs[name].validate(valid => {
         if (valid) {
-          var param = new URLSearchParams();
-          param.append("username", that.formValidate.userName);
-          param.append("password", that.formValidate.password);
-          param.append("nickName", that.formValidate.nickName);
-          param.append("sex", that.formValidate.sex);
-          param.append("registerDate", that.formValidate.registerDate);
+          var postData = {"name": that.formValidate.name,
+            "username": that.formValidate.username,
+            "password": that.formValidate.password,
+            "dept": that.formValidate.dept,
+            "sex": that.formValidate.sex,
+            "description": that.formValidate.description,
+            "crtTime": new Date(),
+            "updTime": new Date() };
+            
           axios
-            .post(config.baseUrl + "/user/add", param)
+            .post(config.baseUrl + "/base/user/add", postData)
             .then(function(res) {
               if (res.data.code == "200") {
                 that.$Message.success("添加成功!");

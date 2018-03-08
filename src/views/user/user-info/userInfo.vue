@@ -39,51 +39,62 @@ export default {
           }
         },
         {
+          title: "姓名",
+          key: "name"
+        },
+        {
           title: "用户名",
           key: "username"
         },
         {
-          title: "昵称",
-          key: "nickName"
-        },
-        {
           title: "性别",
           key: "sex",
-          render: (h, params) => {
-            if (params.row.sex == 1) {
-              return h("div", [h("span", "男")]);
-            } else {
-              return h("div", [h("span", "女")]);
-            }
-          },
           filters: [
             {
               label: "男",
-              value: 1
+              value: "男"
             },
             {
               label: "女",
-              value: 0
+              value: "女"
             }
           ],
           filterMultiple: false,
           filterMethod(value, row) {
-            if (value === 1) {
-              return row.sex == 1;
-            } else if (value === 0) {
-              return row.sex == 0;
+            if (value === "男") {
+              return row.sex == "男";
+            } else if (value === "女") {
+              return row.sex == "女";
             }
           }
         },
+         {
+          title: "描述",
+          key: "description"
+        },
         {
-          title: "日期",
-          key: "registerDate",
+          title: "创建时间",
+          key: "crtTime",
           render: (h, params) => {
             return h(
               "div",
-              new Date(params.row.registerDate).Format("yyyy-MM-dd hh:mm:ss")
+              new Date(params.row.crtTime).Format("yyyy-MM-dd hh:mm:ss")
             );
           }
+        },
+        {
+          title: "更新时间",
+          key: "updTime",
+          render: (h, params) => {
+            return h(
+              "div",
+              new Date(params.row.updTime).Format("yyyy-MM-dd hh:mm:ss")
+            );
+          }
+        },
+        {
+          title: "最后更新人",
+          key: "updName"
         },
         {
           title: "操作",
@@ -121,7 +132,7 @@ export default {
                     "on-ok": () => {
                       axios
                         .post(
-                          config.baseUrl + "/user/delete?id=" + params.row.id
+                          config.baseUrl + "/base/user/delete?id=" + params.row.id
                         )
                         .then(function(res) {
                           if (res.data.code == "200") {
@@ -158,7 +169,7 @@ export default {
     getList() {
       var that = this;
       axios
-        .get(config.baseUrl + "/user/list?page="+that.pageNum+"&size="+that.pageSize)
+        .get(config.baseUrl + "/base/user/list?page="+that.pageNum+"&size="+that.pageSize)
         .then(function(res) {
           // console.log(res.data.data);
           that.dataList = res.data.data.list;
