@@ -70,6 +70,9 @@ export default {
               // console.log(res);
               if (res.data.code == "200") {
                 Cookies.set("user", that.form.username);
+                localStorage.setItem("username", res.data.data[0].username);
+                localStorage.setItem("name", res.data.data[0].name);
+                localStorage.setItem("updHost", res.data.data[0].updHost);
                 that.$router.push({
                   name: "home_index"
                 });

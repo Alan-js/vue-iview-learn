@@ -27,7 +27,7 @@
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
                                 <a href="javascript:void(0)">
-                                    <span class="main-user-name">{{ userName }}</span>
+                                    <span class="main-user-name">{{ username }}</span>
                                     <Icon type="arrow-down-b"></Icon>
                                 </a>
                                 <DropdownMenu slot="list">
@@ -66,7 +66,7 @@ export default {
     data () {
         return {
             shrink: false,
-            userName: '',
+            username: '',
             openedSubmenuArr: this.$store.state.app.openedSubmenuArr
         };
     },
@@ -88,7 +88,7 @@ export default {
             if (pathArr.length >= 2) {
                 this.$store.commit('addOpenSubmenu', pathArr[1].name);
             }
-            this.userName = Cookies.get('user');
+            this.username = localStorage.getItem('username');
             
         },
         toggleClick () {

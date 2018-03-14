@@ -45,7 +45,8 @@ export const otherRouter = {
     component: Main,
     children: [
         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } },
-        { path: 'userUpdate/:userId', title: '修改用户', name: 'userUpdate', component: resolve => { require(['@/views/user/user-update/userUpdate.vue'], resolve); } }
+        { path: 'userUpdate/:userId', title: '修改用户', name: 'userUpdate', component: resolve => { require(['@/views/user/user-update/userUpdate.vue'], resolve); } },
+        { path: 'departmentUpdate/:departmentId', title: '修改部门', name: 'departmentUpdate', component: resolve => { require(['@/views/department/department-update/departmentUpdate.vue'], resolve); } }
     ]
 };
 
@@ -71,6 +72,29 @@ export const appRouter = [
                 name: 'userAdd',
                 title: '添加用户',
                 component: resolve => { require(['@/views/user/user-add/userAdd.vue'], resolve); }
+            }
+        ]
+    },
+    {
+        path: '/department',
+        icon: 'pin',
+        name: 'department',
+        title: '部门管理',
+        component: Main,
+        children: [
+            {
+                path: 'departmentInfo',
+                icon: 'pin',
+                name: 'departmentInfo',
+                title: '部门信息',
+                component: resolve => { require(['@/views/department/department-info/departmentInfo.vue'], resolve); }
+            },
+            {
+                path: 'departmentAdd',
+                icon: 'plus',
+                name: 'departmentAdd',
+                title: '添加部门',
+                component: resolve => { require(['@/views/department/department-add/departmentAdd.vue'], resolve); }
             }
         ]
     },

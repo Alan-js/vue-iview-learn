@@ -20,6 +20,9 @@
                 <Option value="运维部">运维部</Option>
             </Select>
         </FormItem>
+        <FormItem label="手机号码" prop="telPhone">
+            <Input v-model="formValidate.telPhone" placeholder="输入手机号码"></Input>
+        </FormItem>
         <FormItem label="性别" prop="sex">
             <Select v-model="formValidate.sex" placeholder="选择性别">
                 <Option value="男">男</Option>
@@ -48,6 +51,7 @@ export default {
         username: "",
         password: "",
         dept: "",
+        telPhone: "",
         sex: "",
         description: ""
       },
@@ -57,6 +61,12 @@ export default {
             required: true,
             message: "姓名不能为空",
             trigger: "blur"
+          },
+          {
+            min: 2,
+            max: 5,
+            message: '长度在 2 到 5 个字符',
+            trigger: 'blur'
           }
         ],
         username: [
@@ -64,6 +74,12 @@ export default {
             required: true,
             message: "用户名不能为空",
             trigger: "blur"
+          },
+          {
+            min: 2,
+            max: 20,
+            message: '长度在 2 到 20 个字符',
+            trigger: 'blur'
           }
         ],
         password: [
@@ -71,6 +87,13 @@ export default {
             required: true,
             message: "密码不能为空",
             trigger: "blur"
+          },
+          ,
+          {
+            min: 5,
+            max: 20,
+            message: '长度在 5 到 20 个字符',
+            trigger: 'blur'
           }
         ],
         dept: [
@@ -88,15 +111,18 @@ export default {
       var that = this;
       that.$refs[name].validate(valid => {
         if (valid) {
+          var name = localStorage.getItem("name");
           var postData = {"name": that.formValidate.name,
             "username": that.formValidate.username,
             "password": that.formValidate.password,
             "dept": that.formValidate.dept,
+            "telPhone": that.formValidate.telPhone,
             "sex": that.formValidate.sex,
             "description": that.formValidate.description,
             "crtTime": new Date(),
-            "updTime": new Date() };
-            
+            "crtName": name,
+            "updTime": new Date(),
+            "updName": name };
           axios
             .post(config.baseUrl + "/base/user/add", postData)
             .then(function(res) {

@@ -2,7 +2,7 @@
     <div>
         <Row>
           <Col span="20">
-            <h1>用户信息</h1>
+            <h1>部门信息</h1>
           </Col>
           <Col span="4" style="font-size:30px">
             <Tooltip content="添加用户">
@@ -23,7 +23,7 @@ import axios from "axios";
 import util from "../../../libs/util";
 import config from "../../../../build/config";
 export default {
-  name: "userInfo",
+  name: "departmentInfo",
   data() {
     return {
       dataList: [],
@@ -40,42 +40,16 @@ export default {
           width: 100
         },
         {
-          title: "姓名",
+          title: "部门名称",
           key: "name",
           width: 100
         },
         {
-          title: "用户名",
-          key: "username",
+          title: "部门编号",
+          key: "code",
           width: 100
         },
         {
-          title: "手机号码",
-          key: "telPhone"
-        },
-        {
-          title: "性别",
-          key: "sex",
-          filters: [
-            {
-              label: "男",
-              value: "男"
-            },
-            {
-              label: "女",
-              value: "女"
-            }
-          ],
-          filterMultiple: false,
-          filterMethod(value, row) {
-            if (value === "男") {
-              return row.sex == "男";
-            } else if (value === "女") {
-              return row.sex == "女";
-            }
-          }
-        },
-         {
           title: "描述",
           key: "description"
         },
@@ -120,12 +94,12 @@ export default {
                   style: { "margin-right": "5px" },
                   on: {
                     click: () =>{
-                      var argu = { userId: params.row.id,userRow: params.row };
+                      var argu = { departmentId: params.row.id,departmentRow: params.row };
                       this.$router.push({
-                          name: 'userUpdate',
+                          name: 'departmentUpdate',
                           params: argu
                       });
-                      localStorage.userRow = JSON.stringify(params.row);
+                      localStorage.departmentRow = JSON.stringify(params.row);
                     }
                   }
                 },
@@ -143,7 +117,7 @@ export default {
                     "on-ok": () => {
                       axios
                         .post(
-                          config.baseUrl + "/base/user/delete?id=" + params.row.id
+                          config.baseUrl + "/department/delete?id=" + params.row.id
                         )
                         .then(function(res) {
                           if (res.data.code == "200") {
@@ -180,7 +154,7 @@ export default {
     getList() {
       var that = this;
       axios
-        .get(config.baseUrl + "/base/user/list?page="+that.pageNum+"&size="+that.pageSize)
+        .get(config.baseUrl + "/department/list?page="+that.pageNum+"&size="+that.pageSize)
         .then(function(res) {
           // console.log(res.data.data);
           that.dataList = res.data.data.list;
@@ -201,7 +175,7 @@ export default {
       this.getList();
     },
     goAdd() {
-      this.$router.push({ name: "userAdd" });
+      this.$router.push({ name: "departmentAdd" });
     },
     initFormat() {
       Date.prototype.Format = function(fmt) {

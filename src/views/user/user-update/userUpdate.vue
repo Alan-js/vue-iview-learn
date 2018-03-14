@@ -20,6 +20,9 @@
                 <Option value="运维部">运维部</Option>
             </Select>
         </FormItem>
+        <FormItem label="手机号码" prop="telPhone">
+            <Input v-model="formValidate.telPhone" placeholder="输入手机号码"></Input>
+        </FormItem>
         <FormItem label="性别" prop="sex">
             <Select v-model="formValidate.sex" placeholder="选择性别">
                 <Option value="男">男</Option>
@@ -48,6 +51,7 @@ export default {
         username: "",
         password: "",
         dept: "",
+        telPhone: "",
         sex: "",
         description: ""
       },
@@ -99,6 +103,7 @@ export default {
         that.formValidate.username = userRow.username;
         that.formValidate.password = userRow.password;
         that.formValidate.dept = userRow.dept;
+        that.formValidate.telPhone = userRow.telPhone;
         that.formValidate.sex = userRow.sex.toString();
         that.formValidate.description = userRow.description;
     },
@@ -107,21 +112,18 @@ export default {
       var userRow = JSON.parse(localStorage.getItem('userRow'));
       that.$refs[name].validate(valid => {
         if (valid) {
+          var name = localStorage.getItem("name");
           var postData = {
             "id": userRow.id,
             "name": that.formValidate.name,
             "username": that.formValidate.username,
             "password": that.formValidate.password,
             "dept": that.formValidate.dept,
+            "telPhone": that.formValidate.telPhone,
             "sex": that.formValidate.sex,
-            "description": that.formValidate.description };
-          // var param = new URLSearchParams();
-          // param.append("id",userRow.id);
-          // param.append("username", that.formValidate.userName);
-          // param.append("password", that.formValidate.password);
-          // param.append("nickName", that.formValidate.nickName);
-          // param.append("sex", that.formValidate.sex);
-        //   param.append("registerDate", that.formValidate.registerDate);
+            "description": that.formValidate.description,
+            "updTime": new Date(),
+            "updName": name };
           axios
             .post(config.baseUrl + "/base/user/update", postData)
             .then(function(res) {
