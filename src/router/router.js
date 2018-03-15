@@ -46,7 +46,8 @@ export const otherRouter = {
     children: [
         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } },
         { path: 'userUpdate/:userId', title: '修改用户', name: 'userUpdate', component: resolve => { require(['@/views/user/user-update/userUpdate.vue'], resolve); } },
-        { path: 'departmentUpdate/:departmentId', title: '修改部门', name: 'departmentUpdate', component: resolve => { require(['@/views/department/department-update/departmentUpdate.vue'], resolve); } }
+        { path: 'departmentUpdate/:departmentId', title: '修改部门', name: 'departmentUpdate', component: resolve => { require(['@/views/department/department-update/departmentUpdate.vue'], resolve); } },
+        { path: 'roleUpdate/:roleId', title: '修改角色', name: 'roleUpdate', component: resolve => { require(['@/views/role/role-update/roleUpdate.vue'], resolve); } }
     ]
 };
 
@@ -72,6 +73,20 @@ export const appRouter = [
                 name: 'userAdd',
                 title: '添加用户',
                 component: resolve => { require(['@/views/user/user-add/userAdd.vue'], resolve); }
+            },
+            {
+                path: 'roleInfo',
+                icon: 'heart',
+                name: 'roleInfo',
+                title: '角色信息',
+                component: resolve => { require(['@/views/role/role-info/roleInfo.vue'], resolve); }
+            },
+            {
+                path: 'roleAdd',
+                icon: 'plus',
+                name: 'roleAdd',
+                title: '添加角色',
+                component: resolve => { require(['@/views/role/role-add/roleAdd.vue'], resolve); }
             }
         ]
     },

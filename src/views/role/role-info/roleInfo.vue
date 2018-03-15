@@ -2,10 +2,10 @@
     <div>
         <Row>
           <Col span="20">
-            <h1>部门信息</h1>
+            <h1>角色信息</h1>
           </Col>
           <Col span="4" style="font-size:30px">
-            <Tooltip content="添加用户">
+            <Tooltip content="添加角色">
               <Icon type="plus" @click.native="goAdd()"></Icon>
             </Tooltip>
             
@@ -23,7 +23,7 @@ import axios from "axios";
 import util from "../../../libs/util";
 import config from "../../../../build/config";
 export default {
-  name: "departmentInfo",
+  name: "userInfo",
   data() {
     return {
       dataList: [],
@@ -40,14 +40,22 @@ export default {
           width: 100
         },
         {
-          title: "部门名称",
+          title: "角色名称",
           key: "name",
           width: 100
         },
         {
-          title: "部门编码",
+          title: "角色编码",
           key: "code",
           width: 100
+        },
+        {
+          title: "角色类型",
+          key: "type"
+        },
+        {
+          title: "角色组类型",
+          key: "groupType"
         },
         {
           title: "描述",
@@ -94,12 +102,12 @@ export default {
                   style: { "margin-right": "5px" },
                   on: {
                     click: () =>{
-                      var argu = { departmentId: params.row.id,departmentRow: params.row };
+                      var argu = { roleId: params.row.id,roleRow: params.row };
                       this.$router.push({
-                          name: 'departmentUpdate',
+                          name: 'roleUpdate',
                           params: argu
                       });
-                      localStorage.departmentRow = JSON.stringify(params.row);
+                      localStorage.roleRow = JSON.stringify(params.row);
                     }
                   }
                 },
@@ -117,7 +125,7 @@ export default {
                     "on-ok": () => {
                       axios
                         .post(
-                          config.baseUrl + "/department/delete?id=" + params.row.id
+                          config.baseUrl + "/role/delete?id=" + params.row.id
                         )
                         .then(function(res) {
                           if (res.data.code == "200") {
@@ -154,7 +162,7 @@ export default {
     getList() {
       var that = this;
       axios
-        .get(config.baseUrl + "/department/list?page="+that.pageNum+"&size="+that.pageSize)
+        .get(config.baseUrl + "/role/list?page="+that.pageNum+"&size="+that.pageSize)
         .then(function(res) {
           // console.log(res.data.data);
           that.dataList = res.data.data.list;
@@ -175,7 +183,7 @@ export default {
       this.getList();
     },
     goAdd() {
-      this.$router.push({ name: "departmentAdd" });
+      this.$router.push({ name: "roleAdd" });
     },
     initFormat() {
       Date.prototype.Format = function(fmt) {

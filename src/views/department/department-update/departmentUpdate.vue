@@ -5,8 +5,8 @@
         <FormItem label="部门名称" prop="name">
             <Input v-model="formValidate.name" placeholder="输入部门名称"></Input>
         </FormItem>
-        <FormItem label="部门编号" prop="code">
-            <Input v-model="formValidate.code" placeholder="输入部门编号"></Input>
+        <FormItem label="部门编码" prop="code">
+            <Input v-model="formValidate.code" placeholder="输入部门编码"></Input>
         </FormItem>
         <FormItem label="描述" prop="description">
             <Input v-model="formValidate.description" placeholder="输入描述"></Input>
@@ -41,7 +41,7 @@ export default {
         code: [
           {
             required: true,
-            message: "部门编号不能为空",
+            message: "部门编码不能为空",
             trigger: "blur"
           }
         ]

@@ -3,7 +3,7 @@
     <h1>修改用户</h1>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="姓名" prop="name">
-            <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
+            <Input v-model="formValidate.name" placeholder="输入姓名"></Input>
         </FormItem>
         <FormItem label="用户名" prop="username">
             <Input v-model="formValidate.username" placeholder="输入用户名"></Input>
